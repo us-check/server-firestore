@@ -73,7 +73,21 @@ def load_additional_data_to_firestore():
         
         for i, item in enumerate(items, 1):
             try:
-                content_id = item.get('contentid', f'item_{i}')
+                # contentid 확인 및 유효성 검사
+                content_id = item.get('contentid', '').strip()
+                
+                # contentid가 비어있거나 유효하지 않은 경우 대체 ID 생성
+                if not content_id:
+                    content_id = f'item_{i}_{datetime.now().strftime("%Y%m%d_%H%M%S")}'
+                    print(f"⚠️  contentid가 없어서 대체 ID 생성: {content_id}")
+                
+                # 문서 ID 유효성 검사 (Firestore 문서 ID 규칙)
+                if len(content_id) > 1500:  # Firestore 문서 ID 최대 길이
+                    content_id = content_id[:1500]
+                
+                # 특수문자 제거 (Firestore에서 허용하지 않는 문자들)
+                import re
+                content_id = re.sub(r'[^\w\-_.]', '_', content_id)
                 
                 # 기존 데이터 존재 여부 확인
                 if content_id in existing_content_ids:
