@@ -1,3 +1,5 @@
 qrcode
+qrcode[pil]
 google-cloud-storage
 markupsafe
+google-cloud-firestore
