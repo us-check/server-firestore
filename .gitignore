@@ -1,0 +1,10 @@
+venv/
+
+.env
+
+*.json
+
+*.pyc
+__pycache__/
+# Ignore database files
+db.sqlite3
