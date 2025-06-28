@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.conf import settings
 import logging
-
+import uuid
+from google.cloud import firestore
 from .services import GeminiService
 
 
@@ -40,10 +41,40 @@ def view_qr(request):
     return Response({"error": "잘못된 요청"}, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(['POST','GET'])
+@permission_classes([AllowAny])
+@csrf_exempt
 def view_business(request):
-    if request.method == 'GET':
-        return Response({"message": "비즈니스 뷰"})
+    if request.method == 'POST':
+        data = request.data
+        business_name = data.get('name', '').strip()
+        business_address = data.get('address', '').strip()
+        business_price = data.get('price', '').strip()
+        business_overview = data.get('overview', '').strip()
+        business_image = data.get('image', None)
+        business_contenttypeid = data.get('contenttypeid', None)
+        business_contentid = uuid().hex[:8]  # UUID 생성 (예시로 8자리 사용)
+        
+        if not (business_name and business_address and business_price):
+            return Response({"error": "모든 필드를 입력해야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # 비즈니스 정보 저장 로직 (예: 데이터베이스에 저장)
+        db = firestore.Client()
+        doc_ref = db.collection('businesses').document()
+        doc_ref.set({
+            'name': business_name,
+            'address': business_address,
+            'price': business_price,
+            'overview': business_overview,
+            'image': business_image,
+            'created_at': timezone.now().isoformat()
+        })
+        
+        
+        
+        return Response({"message": "비즈니스 정보 저장 완료"}, status=status.HTTP_200_OK)
     return Response({"error": "잘못된 요청"}, status=status.HTTP_400_BAD_REQUEST)       
         
         
+   
 
