@@ -10,7 +10,11 @@ dotenv.load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-FIRESTORE_CREDENTIALS = os.getenv("FIRESTORE_CREDENTIALS", "./gen-lang-client-0000121060-ddc9d311e239.json")
+# Firestore Settings
+# FIRESTORE_CLIENT = firestore.Client()
+FIRESTORE_PROJECT_ID = os.environ.get('FIRESTORE_PROJECT_ID', 'gen-lang-client-0000121060')
+FIRESTORE_DATABASE_ID = os.environ.get('FIRESTORE_DATABASE_ID', '(default)')
+FIRESTORE_CREDENTIALS = os.getenv("FIRESTORE_CREDENTIALS", "./gen-lang-client-0000121060-ea7b2bef1534.json")
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = FIRESTORE_CREDENTIALS    
 
