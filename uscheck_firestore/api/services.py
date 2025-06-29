@@ -204,7 +204,7 @@ class GeminiService:
                 temperature=0.8,  #일관성 있는 응답 정도 (높을수록 자유도)
                 top_p=0.8,
                 top_k=40,
-                max_output_tokens=8000,  # 토큰 수 줄임
+                max_output_tokens=10000,  # 토큰 수 줄임
                 response_mime_type="text/plain"
             )
             

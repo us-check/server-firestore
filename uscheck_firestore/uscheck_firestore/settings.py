@@ -38,7 +38,7 @@ SECRET_KEY = 'django-insecure-bf8co_v&&)gz9&qove3w#dz44fil$-p+^60$t1f4onaeg=0da1
 DEBUG = True
 
 SERVER_ADDRESS = os.environ.get('SERVER_ADDRESS', 'localhost')
-CLIENT_ADDRESS = os.environ.get('CLIENT_ADDRESS', 'http://172.20.10.4:3000')
+CLIENT_ADDRESS = os.environ.get('CLIENT_ADDRESS', 'http://192.168.0.12:3000')
 
 ALLOWED_HOSTS = [SERVER_ADDRESS, '127.0.0.1', 'localhost']
 

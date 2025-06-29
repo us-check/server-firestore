@@ -64,7 +64,7 @@ def qr_generate_request(request):
                 'store': store_name,
                 'price': store_price,
                 'timestamp': timezone.now().isoformat(),
-                'request_id': str(uuid.uuid4()),
+                'request_id': uuid.uuid4().hex[:8],
                 'original_data': f"{store_name}_{store_price}_{timezone.now().strftime('%Y%m%d_%H%M%S')}"
             }
             
@@ -160,9 +160,8 @@ def view_business(request):
         business_address = data.get('address', '').strip()
         business_price = data.get('price', '').strip()
         business_overview = data.get('overview', '').strip()
-        business_image = data.get('image', None)
         business_contenttypeid = data.get('contenttypeid', None)
-        business_contentid = uuid().hex[:8]  # UUID 생성 (예시로 8자리 사용)
+        business_contentid = uuid.uuid4().hex[:8]  # UUID 생성 (예시로 8자리 사용)
         
         if not (business_name and business_address and business_price):
             return Response({"error": "모든 필드를 입력해야 합니다."}, status=status.HTTP_400_BAD_REQUEST)
@@ -175,7 +174,6 @@ def view_business(request):
             'address': business_address,
             'price': business_price,
             'overview': business_overview,
-            'image': business_image,
             'created_at': timezone.now().isoformat()
         })
         
