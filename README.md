@@ -5,7 +5,9 @@ This project is a tourism information and recommendation service for Uiseong-gun
 
 ## Demo Video
 
-[![Project Demo](https://img.youtube.com/vi/EjaPMB0wIrY/0.jpg)](https://www.youtube.com/watch?v=EjaPMB0wIrY)
+<a href="https://www.youtube.com/watch?v=EjaPMB0wIrY" target="_blank">
+  <img src="uscheck_mainpage.png" alt="Project Demo Video" style="width:100%;">
+</a>
 
 [Watch the demo video on YouTube](https://www.youtube.com/watch?v=EjaPMB0wIrY)
 
