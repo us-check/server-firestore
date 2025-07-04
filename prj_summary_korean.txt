@@ -1,0 +1,20 @@
+이 프로젝트는 **대한민국 경상북도 의성군을 위한 관광 정보 및 추천 서비스**로, Python Django 백엔드를 기반으로 구축되었습니다.
+
+주요 기능 및 아키텍처 요약은 다음과 같습니다.
+
+**주요 기능:**
+
+*   **AI 기반 관광지 추천:** 핵심 기능은 자연어 사용자 쿼리를 받는 API 엔드포인트(`/api/query/`)입니다. 이 기능은 **Google Gemini AI**를 사용하여 쿼리의 의도와 키워드를 분석합니다. 분석 결과를 바탕으로 Firestore 데이터베이스에서 추천 관광지 목록을 가져와 반환합니다. AI는 '의성군 관광 전문가'라는 특정 페르소나를 부여받았습니다.
+*   **데이터 관리:** 시스템은 다양한 관광지 정보가 포함된 `us_tourdata_final.txt` 데이터 파일에 의존합니다. `add_prices.py`, `convert_price_to_string.py`, `load.py` / `upload_json_to_firestore.py`와 같은 여러 Python 스크립트를 사용하여 이 데이터를 준비하고 Firestore에 업로드합니다.
+*   **QR 코드 생성:** 비동기식 QR 코드 생성 서비스를 제공합니다. API 요청을 통해 Google Cloud Pub/Sub 토픽으로 메시지를 발행하면, 별도의 클라우드 함수(`generate_qr_pubsub`)가 이 메시지를 수신하여 QR 코드 이미지를 생성하고 Google Cloud Storage에 저장합니다. 생성된 QR 코드의 공개 URL은 다시 Firestore에 저장되어 조회할 수 있습니다.
+*   **업체 등록:** 새로운 업체 정보를 데이터베이스에 등록하기 위한 간단한 엔드포인트를 포함합니다.
+
+**기술 아키텍처:**
+
+*   **백엔드 프레임워크:** **Django** (Python)
+*   **데이터베이스:** 모든 관광 및 업체 정보의 기본 데이터 저장소로 **Google Cloud Firestore** (NoSQL 데이터베이스)를 사용합니다.
+*   **AI 모델:** 자연어 이해 및 추천 로직을 위해 **Google Gemini**를 사용합니다.
+*   **클라우드 서비스:**
+    *   **Google Cloud Storage:** 생성된 QR 코드 이미지 저장.
+    *   **Google Cloud Pub/Sub:** 비동기 QR 코드 생성 요청 처리.
+*   **API:** 클라이언트 측 애플리케...
